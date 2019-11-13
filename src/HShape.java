@@ -31,32 +31,31 @@ public class HShape extends AbstractShape{
 	static boolean addLevel(Shape s) {
 		HShape h = (HShape) s;
 		if (h.size < 3) {
-			h.canAddLevel = false;
-			return h.canAddLevel;
+			return false;
 		} else if (h.children[0] == null) {
 			// Base case
-			// Add innerHs if the current H has none
+			// Add children if the current H has none
 			h.createChildren();
 		} else {
-			// If innerHs is populated, try on all the innerHs
+			// If children is populated, try on all the children
 			for (int i = 0; i < 7; i++) {
 				addLevel(h.children[i]);
 			}
 		}
 		h.level ++;
-		return h.canAddLevel;
+		return true;
 	}
 	
 	// Method called during base case of addInnerHs
 	public void createChildren() {
-		// Replace the null H in innerHs[n] with a new H starting at the coordinate of the respective square
+		// Replace the null H in children[n] with a new H starting at the coordinate of the respective square
 		// The size of the squares in the new H will be a third of the original size
 		for (int n = 0; n < 7; n++) {
 			this.children[n] = new HShape(this.xNums[n],this.yNums[n],this.c,this.size/3);
 		}
 	}
 	
-	// Draws H if it has no innerHs, otherwise it calls draw(g) on all the children
+	// Draws H if it has no children, otherwise it calls draw(g) on all the children
 	public void draw(Graphics g){
 		g.setColor(c);
 		// Fills the spaces corresponding to the adequate squares
