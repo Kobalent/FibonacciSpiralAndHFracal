@@ -7,7 +7,6 @@ public abstract class AbstractShape implements Shape{
 	protected Color c;
 	protected Shape[] children;
 	public int level;
-	public boolean canAddLevel = true;
 	
 	@Override
 	public void draw(Graphics g) {
