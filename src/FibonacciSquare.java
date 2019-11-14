@@ -3,41 +3,36 @@ import java.awt.Graphics;
 
 public class FibonacciSquare extends AbstractShape{
 	private  int quadrant;
-	private int n;
 	
 	
-	private int limit;
-	private int fN;
 
 	private int arcX;
 	private int arcY;
 	
-	private int rectWide;
-	private int rectHight;
-	private int arcWide;
-	private int arcHight;
+	private int arcSize;
 	
 	private int angle;
-	private int arcAngle =90;
 	
-	public FibonacciSquare(int x, int y, Color c, int quadrant,int limit) {
+//	private int nextX, nextY;
+	
+	
+	/**
+	 * 
+	 */
+	
+	
+	public FibonacciSquare(int x, int y, Color c, int quadrant, int level) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.c = c;
+		this.level = level;
 		this.quadrant = quadrant;
-		this.n = 1;
-		this.limit = limit;
-		this.fN = FibonacciSequence(n);
-		updateDrawingParameter();
+		System.out.println(FibonacciSequence(this.level));
+		this.size = 2* 10 * FibonacciSequence(this.level);
+		this.arcSize = 2*this.size;
+		this.children = new FibonacciSquare[1];
 		updateArc();
-	}
-	
-	public void updateDrawingParameter() {
-		rectWide = 2 * 10 * fN;
-		rectHight = rectWide;
-		arcWide =2 * rectWide;
-		arcHight = arcWide;
 	}
 	/*
 	 * Calculate fibonacci number
@@ -67,7 +62,7 @@ public class FibonacciSquare extends AbstractShape{
 		switch (quadrant) {
 		
 			case 1:
-				arcX = x - rectWide;
+				arcX = x - size;
 				arcY = y;
 				angle = 0;
 				break;
@@ -80,13 +75,13 @@ public class FibonacciSquare extends AbstractShape{
 				
 			case 3:
 				arcX = x;
-				arcY = y - rectHight;
+				arcY = y - size;
 				angle = 90 * 2;
 				break;
 				
 			case 4:
-				arcX = x - rectWide;
-				arcY = y - rectHight;
+				arcX = x - size;
+				arcY = y - size;
 				angle = 90 * 3;
 				break;
 				
@@ -96,9 +91,10 @@ public class FibonacciSquare extends AbstractShape{
 			
 	}
 	
-	public FibonacciSquare fibonacciTiles(int quadrant,int n) {
-		int nextX;
-		int nextY;
+	
+	@Override
+	public void createChildren() {
+		int nextX, nextY;
 		
 		// (1) privious left upper == last right upper
 		// (2) privious left lower == last left upper
@@ -109,62 +105,66 @@ public class FibonacciSquare extends AbstractShape{
 		
 		switch (quadrant) {
 		case 1:
-			nextX = x - (2 * 10 * FibonacciSequence(n+1));
+			nextX = x - (2 * 10 * FibonacciSequence(level+1));
 			nextY = y;
-			return new FibonacciSquare(nextX,nextY,c,2, limit);
+			children[0] = new FibonacciSquare(nextX,nextY,c,2, level+1);
+			break;
 		case 2:
 			nextX = x;
-			nextY = y + rectHight;
-			return new FibonacciSquare(nextX,nextY,c,3, limit);
+			nextY = y + size;
+			children[0] = new FibonacciSquare(nextX,nextY,c,3, level+1);
+			break;
 		case 3:
-			if(n == 1) {
-				nextX = x + rectWide;
+			if(level == 1) {
+				nextX = x + size;
 				nextY = y;
 			} else {
-				nextX = x + rectWide ;
-				nextY = y - (2 * 10 * FibonacciSequence(n+1)) + rectWide;
+				nextX = x + size ;
+				nextY = y - (2 * 10 * FibonacciSequence(level+1)) + size;
 			}
-			return new FibonacciSquare(nextX,nextY,c,4, limit);
+			children[0] = new FibonacciSquare(nextX,nextY,c,4, level+1);
+			break;
 		case 4:
-			nextX = x - (2 * 10 * FibonacciSequence(n+1)) + rectWide; // x = n.x + n.w - w
-			nextY = y - (2 * 10 * FibonacciSequence(n+1)); // y =
-			return new FibonacciSquare(nextX,nextY,c,1, limit);
+			nextX = x - (2 * 10 * FibonacciSequence(level+1)) + size; // x = n.x + n.w - w
+			nextY = y - (2 * 10 * FibonacciSequence(level+1)); // y =
+			children[0] = new FibonacciSquare(nextX,nextY,c,1, level+1);
+			break;
+		default:
+			children[0] = null;
+			break;
 			}
-		return null;
-		
-	}
-
-	public void recursiveTiles(int n,Graphics g,int limit) {
-		if (n < limit) {
-			// recursiveTiles(n-1,g,limit);
-			FibonacciSquare s = fibonacciTiles(quadrant,n);
-			s.n = n + 1;
-			s.fN = FibonacciSequence(s.n);
-			System.out.println(s.fN);
-			s.updateDrawingParameter();
-			s.updateArc();
-			s.draw(g);
-		}
 	}
 	
 	@Override
-	public void draw(Graphics g) {
-		recursiveTiles(n,g,limit);
-		g.setColor(c);
-		g.drawRect(x, y, rectWide, rectHight);
-		g.drawArc(arcX, arcY, arcWide, arcHight, angle, arcAngle);
-		
-		
-	}
-
-	@Override
-	public void createChildren() {
-		
-	}
-
-	@Override
 	public boolean criticalCondition() {
-		return true;
+		switch (quadrant) {
+		case 1:
+			if ((x > 0 && x < 750 && x-size > 0 && x-size < 750) && (y > 0 && y < 750 && y+size > 0 && y+size < 750)) {
+				return true;
+			}
+			return false;
+		}
+		if ((x > 0 && x < 750 && x+size > 0 && x+size < 750) && (y > 0 && y < 750 && y+size > 0 && y+size < 750)) {
+			return true;
+		}
+		return false;
 	}
+
+	
+	@Override
+	public void draw(Graphics g) {
+//		recursiveTiles(level,g,limit);
+//		updateDrawingParameter();
+		g.setColor(c);
+		g.drawRect(x, y, size, size);
+		g.drawArc(arcX, arcY, arcSize, arcSize, angle, 90);
+		
+		if (children[0] != null) {
+			((FibonacciSquare) children[0]).draw(g);
+		}
+		
+	}
+
+
 	
 }
