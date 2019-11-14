@@ -32,6 +32,7 @@ public class MainClass {
 		System.out.println(((AbstractShape)s).addLevel());
 		System.out.println(((AbstractShape)s).addLevel());
 		System.out.println(((AbstractShape)s).addLevel());
+		System.out.println(((AbstractShape)s).removeLevel());
 		System.out.println(((AbstractShape)s).addLevel());
 		model.addView(panel);
 		
@@ -39,7 +40,7 @@ public class MainClass {
 		Shape h2 = new HShape(750, 30, Color.GREEN, 10);
 		Shape h3 = new HShape(525, 140, Color.GREEN, 15);
 		Shape h4 = new HShape(510, 260, Color.GREEN, 40);
-//		model.addShape(h1);
+		model.addShape(h1);
 		model.addShape(h2);
 		model.addShape(h3);
 		model.addShape(h4);
@@ -49,10 +50,10 @@ public class MainClass {
 		((AbstractShape)h1).addLevel();
 		((AbstractShape)h1).addLevel();
 		System.out.println(((AbstractShape)h1).addLevel());
-		System.out.println("The level of h1 is " + ((HShape) h1).level);
-		System.out.println("The level of the sub Hs in h1 is " + ((HShape) ((HShape) h1).children[0]).level);
+		System.out.println("The level of h1 is " + ((HShape) h1).getLevel());
+		System.out.println("The level of the sub Hs in h1 is " + ((HShape) ((HShape) h1).children[0]).getLevel());
 		((AbstractShape) h1).removeLevel();
-		System.out.println("The level of h1 is " + ((HShape) h1).level);
+		System.out.println("The level of h1 is " + ((HShape) h1).getLevel());
 		((AbstractShape) h2).removeLevel();
 		
 		
