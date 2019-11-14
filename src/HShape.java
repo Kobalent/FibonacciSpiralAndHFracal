@@ -5,8 +5,6 @@ import java.util.ArrayList;
 public class HShape extends AbstractShape{
 	// Arrays for the X and Y values of the top-left corner of each square
 	private int[] xNums = {},yNums = {};
-	// Size value in pixels of each square in the H
-	private int size;
 	// Array of H shapes contained within the current H; initially all set to null
 	// private HShape[] innerHs = new HShape[7];
 	
