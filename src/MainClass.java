@@ -33,15 +33,15 @@ public class MainClass {
 		model.addShape(h2);
 		model.addShape(h3);
 		model.addShape(h4);
-		HShape.addLevel(h4);
-		HShape.addLevel(h1);
-		HShape.addLevel(h1);
-		System.out.println(HShape.addLevel(h1));
+		((AbstractShape)h4).addLevel();
+		((AbstractShape)h1).addLevel();
+		((AbstractShape)h1).addLevel();
+		System.out.println(((AbstractShape)h1).addLevel());
 		System.out.println("The level of h1 is " + ((HShape) h1).level);
 		System.out.println("The level of the sub Hs in h1 is " + ((HShape) ((HShape) h1).children[0]).level);
-		AbstractShape.removeLevel(h1);
+		//((AbstractShape) h1).removeLevel();
 		System.out.println("The level of h1 is " + ((HShape) h1).level);
-		System.out.println(AbstractShape.removeLevel(h2));
+		((AbstractShape) h2).removeLevel();
 		
 		
 	}
