@@ -19,14 +19,20 @@ public abstract class AbstractShape implements Shape{
 	}
 	
 	public boolean addLevel() {
+		if (!this.criticalCondition()) {
+			return false;
+		}
 		if (this.children[0] == null) {
 			// Base case
 			// Add children if the current shape has none
 			this.createChildren();
+			
 		} else {
 			// If children array is populated, try on all the children
 			for (int i = 0; i < 7; i++) {
-				((AbstractShape) this.children[i]).addLevel();
+				if(!((AbstractShape) this.children[i]).addLevel()) {
+					return false;
+				}
 			}
 		}
 		this.level ++;
