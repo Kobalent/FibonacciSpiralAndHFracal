@@ -1,6 +1,5 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.ArrayList;
 
 public class HShape extends AbstractShape{
 	// Arrays for the X and Y values of the top-left corner of each square
@@ -20,13 +19,9 @@ public class HShape extends AbstractShape{
 		this.xNums = xTemp;
 		int[] yTemp = {y,y+size,y+(2*size),y+size,y,y+size, y+(2*size)};
 		this.yNums = yTemp;
-		this.level = 1;
 		this.children = new HShape[7];
 	}
 	
-	
-	// Returns whether the shape has reached its critical condition.
-	// in the case of HShape, each square has to be of size larger than 3px
 	public boolean criticalCondition() {
 		if (this.size < 3) {
 			return false;
@@ -35,11 +30,10 @@ public class HShape extends AbstractShape{
 		}
 	}
 	
-	
 	// Method called during base case of AbstractShape.addLevel()
 	public void createChildren() {
-		// Replace the null Shape in children with a new HShape starting at the coordinate of the respective square
-		// The size of the squares in the new HShape will be a third of the original size
+		// Replace the null H in innerHs[n] with a new H starting at the coordinate of the respective square
+		// The size of the squares in the new H will be a third of the original size
 		for (int n = 0; n < 7; n++) {
 			this.children[n] = new HShape(this.xNums[n],this.yNums[n],this.c,this.size/3);
 		}
