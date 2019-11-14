@@ -1,13 +1,11 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.ArrayList;
 
 public abstract class AbstractShape implements Shape{
 	protected int x, y;
-	protected Color c;
 	protected int size;
+	protected Color c;
 	protected Shape[] children;
-	public int level;
 	
 	@Override
 	public void draw(Graphics g) {
@@ -30,30 +28,28 @@ public abstract class AbstractShape implements Shape{
 			
 		} else {
 			// If children array is populated, try on all the children
-			for (int i = 0; i < 7; i++) {
+			for (int i = 0; i < this.children.length; i++) {
 				if(!((AbstractShape) this.children[i]).addLevel()) {
 					return false;
 				}
 			}
 		}
-		this.level ++;
 		return true;
 	}
 	
 	public boolean removeLevel() {
 		
 		// cannot remove level if level = 1
-		if (this.level == 1) {
+		if (this.getLevel() == 1) {
 			return false;
 		}
 		
 		// base case
 		// if the shape's level is 2, set all the children to null and decrease the level
-		else if (this.level == 2) {
+		else if (this.getLevel() == 2) {
 			for (int i = 0; i< this.children.length; i++) {
 				this.children[i] = null;
 			}
-			this.level --;
 		}
 		
 		// if the shape is any level higher than 2
@@ -62,11 +58,18 @@ public abstract class AbstractShape implements Shape{
 			for (int i = 0; i < this.children.length; i++) {
 				((AbstractShape)this.children[i]).removeLevel();
 			}
-			this.level --;
 		}
 		
 		// return true if shape is not level 1
 		return true;
 		
+	}
+	
+	public int getLevel() {
+		if (this.children[0] == null) {
+			return 1;
+		} else {
+			return ((AbstractShape) this.children[0]).getLevel() + 1;
+		}
 	}
 }
