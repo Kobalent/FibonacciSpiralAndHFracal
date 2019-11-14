@@ -159,8 +159,12 @@ public class FibonacciSquare extends AbstractShape{
 
 	@Override
 	public void createChildren() {
-		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean criticalCondition() {
+		return true;
 	}
 	
 }
