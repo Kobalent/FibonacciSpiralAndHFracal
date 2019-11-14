@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public abstract class AbstractShape implements Shape{
 	protected int x, y;
 	protected Color c;
+	protected int size;
 	protected Shape[] children;
 	public int level;
 	
