@@ -5,4 +5,7 @@ public interface Shape {
 	abstract public Shape deepCopy();
 	abstract void createChildren();
 	public abstract boolean criticalCondition();
+	public abstract boolean addLevel();
+	public abstract boolean removeLevel();
+	public abstract int getLevel();
 }
