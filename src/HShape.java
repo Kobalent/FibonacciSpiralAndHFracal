@@ -27,32 +27,18 @@ public class HShape extends AbstractShape{
 	}
 	
 	
-	// If the size of a square is greater than 3, check if the H has innerHs and run accordingly
-	static boolean addLevel(Shape s) {
-		HShape h = (HShape) s;
-		if (h.size < 3) {
-			return false;
-		} else if (h.children[0] == null) {
-			// Base case
-			// Add children if the current H has none
-			h.createChildren();
-		} else {
-			// If children is populated, try on all the children
-			for (int i = 0; i < 7; i++) {
-				addLevel(h.children[i]);
+	// Method called during base case of AbstractShape.addLevel()
+	public boolean createChildren() {
+		// Do not execute if the size of each H would be less than 3 pixels.
+		if (size >= 3) {
+			// Replace the null H in innerHs[n] with a new H starting at the coordinate of the respective square
+			// The size of the squares in the new H will be a third of the original size
+			for (int n = 0; n < 7; n++) {
+				this.children[n] = new HShape(this.xNums[n],this.yNums[n],this.c,this.size/3);
 			}
+			return true;
 		}
-		h.level ++;
-		return true;
-	}
-	
-	// Method called during base case of addInnerHs
-	public void createChildren() {
-		// Replace the null H in children[n] with a new H starting at the coordinate of the respective square
-		// The size of the squares in the new H will be a third of the original size
-		for (int n = 0; n < 7; n++) {
-			this.children[n] = new HShape(this.xNums[n],this.yNums[n],this.c,this.size/3);
-		}
+		return false;
 	}
 	
 	// Draws H if it has no children, otherwise it calls draw(g) on all the children
