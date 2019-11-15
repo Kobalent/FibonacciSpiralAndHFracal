@@ -8,4 +8,5 @@ public interface Shape {
 	public abstract boolean addLevel();
 	public abstract boolean removeLevel();
 	public abstract int getLevel();
+	public abstract String toString();
 }
