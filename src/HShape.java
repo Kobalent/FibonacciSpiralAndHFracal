@@ -23,7 +23,7 @@ public class HShape extends AbstractShape{
 	}
 	
 	public boolean criticalCondition() {
-		if (this.size < 3) {
+		if (size < 3) {
 			return false;
 		} else {
 			return true;
