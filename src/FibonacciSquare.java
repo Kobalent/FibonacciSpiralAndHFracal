@@ -28,7 +28,6 @@ public class FibonacciSquare extends AbstractShape{
 		this.c = c;
 		this.iteration = iteration;
 		this.quadrant = quadrant;
-		System.out.println(FibonacciSequence(this.iteration));
 		this.size = 2* 10 * FibonacciSequence(this.iteration);
 		this.arcSize = 2*this.size;
 		this.children = new FibonacciSquare[1];
