@@ -17,8 +17,10 @@ public class DrawingController implements ActionListener, MouseListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("click");
+		int x = e.getX();
+		int y = e.getY();
+		model.changeLevel(x, y);
 	}
 
 	@Override
@@ -47,8 +49,11 @@ public class DrawingController implements ActionListener, MouseListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+
+		System.out.println("click");
+
+		System.out.println("click");
+		model.changeLevel(1, 1);
 	}
 
 }
