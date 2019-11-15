@@ -17,10 +17,16 @@ public class DrawingController implements ActionListener, MouseListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("click");
-		int x = e.getX();
-		int y = e.getY();
-		model.changeLevel(x, y);
+//		System.out.println("click");
+//		model.changeLevel(e.getX(), e.getY());
+//		model.updateAll();
+		if (MainClass.addLevel.isSelected()) {
+			model.addLevel(e.getX(),e.getY());
+		}
+		if (MainClass.removeLevel.isSelected()) {
+			model.removeLevel(e.getX(),e.getY());
+		}
+		model.updateAll();
 	}
 
 	@Override
@@ -49,11 +55,7 @@ public class DrawingController implements ActionListener, MouseListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
-		System.out.println("click");
-
-		System.out.println("click");
-		model.changeLevel(1, 1);
+		model.reset();
 	}
 
 }
