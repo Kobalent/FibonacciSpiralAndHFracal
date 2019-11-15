@@ -72,4 +72,8 @@ public abstract class AbstractShape implements Shape{
 			return ((AbstractShape) this.children[0]).getLevel() + 1;
 		}
 	}
+	
+	public String toString() {
+		return this.getClass()+", "+this.x+", "+this.y+", "+this.c+", "+this.getLevel();
+	}
 }
